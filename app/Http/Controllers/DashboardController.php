@@ -9,6 +9,6 @@ class DashboardController extends Controller
     //menampilkan halaman dashboard
     public function index()
     {
-        return view('layouts.master');
+        return view('dashboard');
     }
 }
