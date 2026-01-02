@@ -21,7 +21,7 @@
     <!-- Need: Apexcharts -->
     <script src="{{asset('assets/extensions/apexcharts/apexcharts.min.js')}}"></script>
     <script src="{{asset('assets/static/js/pages/dashboard.js')}}"></script>
-
+    <script src="https://kit.fontawesome.com/911f5f67ff.js" crossorigin="anonymous"></script>
     </body>
 
     </html>
