@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('title', 'Dashboard')
 @section('content')
 <div id="main">
     <header class="mb-3">
