@@ -11,4 +11,10 @@ class TransactionsController extends Controller
     {
         return view('transactions.index');
     }
+
+    // function create untuk menampilkan halaman tambah transaksi
+    public function create()
+    {
+        return view('transactions.create');
+    }
 }
