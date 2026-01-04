@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\transactions;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class categories extends Model
+class Category extends Model
 {
     use SoftDeletes;
 
@@ -18,6 +18,6 @@ class categories extends Model
 
     public function transactions()
     {
-        return $this->hasMany(transactions::class);
+        return $this->hasMany(Transaction::class);
     }
 }
