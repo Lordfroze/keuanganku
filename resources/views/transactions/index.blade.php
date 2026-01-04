@@ -37,20 +37,18 @@
                             <tr>
                                 <th>Tanggal</th>
                                 <th>Jumlah</th>
-                                <th>Deskripsi</th>
                                 <th>Kategori</th>
+                                <th>Deskripsi</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($transactions as $transaction)
                             <tr>
-                                <!-- <td>{{ $transaction->transaction_date }}</td> -->
                                 <td>{{ \Carbon\Carbon::parse($transaction->transaction_date)->format('d M Y') }}</td>
-
-                                <td>{{ $transaction->amount }}</td>
-                                <td>{{ $transaction->description }}</td>
+                                <td>{{ 'Rp'. number_format($transaction->amount, 0, ',','.') }}</td>
                                 <td>{{ $transaction->category->name }}</td>
+                                <td>{{ $transaction->description }}</td>
                                 <td>
                                     <span class="badge bg-success">Active</span>
                                 </td>

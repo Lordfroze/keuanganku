@@ -6,7 +6,7 @@ use App\Http\Controllers\TransactionsController;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard.index');
 });
 
 // route untuk halaman dashboard

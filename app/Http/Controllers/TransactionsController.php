@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transaction;
+use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionsController extends Controller
 {
@@ -18,6 +20,33 @@ class TransactionsController extends Controller
     // function create untuk menampilkan halaman tambah transaksi
     public function create()
     {
-        return view('transactions.create');
+        // mengambil data category
+        $categories = Category::orderBy('name', 'asc')->get();
+        return view('transactions.create', compact('categories'));
+    }
+
+    // function store untuk menyimpan transaksi
+    public function store(Request $request)
+    {
+        // validasi data
+        $request->validate([
+            'transaction_date' => 'required|date',
+            'category_id' => 'required',
+            'amount' => 'required|numeric',
+            'description' => 'nullable|string',
+        ]);
+
+        // simpan transaksi
+        Transaction::create([
+            // 'user_id' => Auth::id(), // mengambil id user yang login
+            'user_id' => 1, // sementara hardcode user_id ke 1
+            'transaction_date' => $request->transaction_date,
+            'category_id' => $request->category_id,
+            'amount' => $request->amount,
+            'description' => $request->description,
+        ]);
+
+        // redirect ke halaman transaksi
+        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil ditambahkan');
     }
 }
