@@ -31,7 +31,7 @@
                                             </div>
                                             <div class="col-md-8 form-group">
                                                 <input type="date" id="transaction_date" class="form-control" name="transaction_date"
-                                                    placeholder="Tanggal">
+                                                    placeholder="Tanggal" value="{{ now()->format('Y-m-d') }}">
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="category_id">Jenis Transaksi</label>
