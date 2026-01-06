@@ -6,15 +6,30 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TransactionsController extends Controller
 {
-    //index function untuk menampilkan halaman transaksi
-    public function index()
+    //index function untuk menampilkan halaman transaksi sesuai bulan
+    public function index(Request $request)
     {
+        $query = Transaction::query();
+        if ($request->filled('month')) {
+            $date = Carbon::parse($request->month);
+
+            $query->whereYear('transaction_date', $date->year)
+                ->whereMonth('transaction_date', $date->month);
+        }
+
+        $transactions = $query->orderBy('transaction_date', 'desc')->get();
+        $totalAmount = $query->sum('amount');
+        $totalIncome = (clone $query)->where('category_id', '1')->sum('amount');
+        $totalExpense = (clone $query)->where('category_id', '2')->sum('amount');
+
+
+
         // tampilkan transaksi
-        $transactions = Transaction::orderBy('created_at', 'desc')->get();
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact('transactions', 'totalAmount', 'totalIncome', 'totalExpense'));
     }
 
     // function create untuk menampilkan halaman tambah transaksi
