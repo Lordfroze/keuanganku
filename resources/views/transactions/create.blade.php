@@ -51,10 +51,10 @@
                                                     placeholder="Jumlah transaksi">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="keterangan">Keterangan</label>
+                                                <label for="description">Keterangan</label>
                                             </div>
                                             <div class="col-md-8 form-group">
-                                                <input type="text" id="keterangan" class="form-control" name="keterangan"
+                                                <input type="text" id="description" class="form-control" name="description"
                                                     placeholder="pendapatan dari jualan">
                                             </div>
 
