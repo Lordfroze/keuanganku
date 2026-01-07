@@ -2,6 +2,15 @@
 @extends('layouts.master')
 @section('content')
 <div id="main">
+    <div class="card-body">
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <p><i class="bi bi-check-circle-fill"></i> {{ session('success') }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+    </div>
+
     <div class="page-heading">
         <div class="page-title">
             <div class="row">
@@ -127,7 +136,7 @@
                             <th>Jumlah</th>
                             <th>Kategori</th>
                             <th>Deskripsi</th>
-                            <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -138,7 +147,19 @@
                             <td>{{ $transaction->category->name }}</td>
                             <td>{{ $transaction->description }}</td>
                             <td>
-                                <span class="badge bg-success">Active</span>
+                                <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-pencil"></i> Ubah
+                                </a>
+                                <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus transaksi ini?')">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
                         <!-- jika table kosong -->
