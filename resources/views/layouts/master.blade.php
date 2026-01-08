@@ -1,7 +1,9 @@
 @include('layouts.__header')
 
 <div id="app">
-    @include('layouts.__sidebar')
-    @yield('content')
+    <div id="main">
+        @include('layouts.__sidebar')
+        @yield('content')
+        @include('layouts.__footer')
+    </div>
 </div>
-@include('layouts.__footer')

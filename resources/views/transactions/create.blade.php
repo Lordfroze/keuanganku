@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="col-md-8 form-group">
                                                 <input type="text" id="description" class="form-control" name="description"
-                                                    placeholder="pendapatan dari jualan">
+                                                    placeholder="pendapatan dari jualan" value="jualan">
                                             </div>
 
                                             <div class="col-sm-12 d-flex justify-content-end">
