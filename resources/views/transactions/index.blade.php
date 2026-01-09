@@ -125,8 +125,6 @@
                     </div>
                 </div>
             </form>
-
-
             <!-- end form pencarian -->
 
             <table class="table table-striped" id="table1">
