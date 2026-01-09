@@ -24,9 +24,24 @@ class DashboardController extends Controller
         $totalIncome = (clone $query)->where('category_id', '1')->sum('amount');
         $totalExpense = (clone $query)->where('category_id', '2')->sum('amount');
 
+        // DATA CHART PENDAPATAN PER BULAN dikrim ke chart-income.js
+        $year = $request->filled('month')
+            ? Carbon::parse($request->month)->year
+            : now()->year;
+
+        $incomePerMonth = Transaction::selectRaw('MONTH(transaction_date) as month, SUM(amount) as total')
+            ->where('category_id', 1)
+            ->whereYear('transaction_date', $year)
+            ->groupBy('month')
+            ->pluck('total', 'month');
+
+        $monthlyIncome = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthlyIncome[] = $incomePerMonth[$i] ?? 0;
+        }
 
 
         // tampilkan transaksi
-        return view('dashboard', compact('transactions', 'totalAmount', 'totalIncome', 'totalExpense'));
+        return view('dashboard', compact('transactions', 'totalAmount', 'totalIncome', 'totalExpense', 'monthlyIncome'));
     }
 }

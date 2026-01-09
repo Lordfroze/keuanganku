@@ -5,6 +5,10 @@
     <a href="#" class="burger-btn d-block d-xl-none">
         <i class="bi bi-justify fs-3"></i>
     </a>
+    <!-- chart income -->
+    <script>
+        window.monthlyIncome = @json($monthlyIncome);
+    </script>
 </header>
 
 <div class="page-heading">
@@ -101,7 +105,8 @@
                             <h4>Profile Visit</h4>
                         </div>
                         <div class="card-body">
-                            <div id="chart-profile-visit"></div>
+                            <div id="chart-income"></div>
+
                         </div>
                     </div>
                 </div>
