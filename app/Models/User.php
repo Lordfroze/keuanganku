@@ -6,8 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\categories;
-use App\Models\transactions;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
@@ -53,11 +51,11 @@ class User extends Authenticatable
 
     public function categories()
     {
-        return $this->hasMany(categories::class);
+        return $this->hasMany(Category::class);
     }
 
     public function transactions()
     {
-        return $this->hasMany(transactions::class);
+        return $this->hasMany(Transaction::class);
     }
 }
