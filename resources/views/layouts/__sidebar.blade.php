@@ -74,6 +74,15 @@
                     </ul>
                 </li>
 
+                <li class="sidebar-item">
+                    <!-- logout button -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="btn btn-danger" type="submit">Logout</button>
+                    </form>
+                </li>
+
+
             </ul>
         </div>
     </div>

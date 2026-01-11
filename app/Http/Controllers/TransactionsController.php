@@ -13,7 +13,8 @@ class TransactionsController extends Controller
     //index function untuk menampilkan halaman transaksi sesuai bulan
     public function index(Request $request)
     {
-        $query = Transaction::query();
+        $query = Transaction::where('user_id', Auth::id());
+
         if ($request->filled('month')) {
             $date = Carbon::parse($request->month);
 
@@ -21,16 +22,28 @@ class TransactionsController extends Controller
                 ->whereMonth('transaction_date', $date->month);
         }
 
-        $transactions = $query->orderBy('transaction_date', 'desc')->get();
-        $totalAmount = $query->sum('amount');
-        $totalIncome = (clone $query)->where('category_id', '1')->sum('amount');
-        $totalExpense = (clone $query)->where('category_id', '2')->sum('amount');
+        $transactions = (clone $query)
+            ->orderBy('transaction_date', 'desc')
+            ->get();
 
+        $totalAmount = (clone $query)->sum('amount');
 
+        $totalIncome = (clone $query)
+            ->where('category_id', 1)
+            ->sum('amount');
 
-        // tampilkan transaksi
-        return view('transactions.index', compact('transactions', 'totalAmount', 'totalIncome', 'totalExpense'));
+        $totalExpense = (clone $query)
+            ->where('category_id', 2)
+            ->sum('amount');
+
+        return view('transactions.index', compact(
+            'transactions',
+            'totalAmount',
+            'totalIncome',
+            'totalExpense'
+        ));
     }
+
 
     // function create untuk menampilkan halaman tambah transaksi
     public function create()
@@ -53,8 +66,8 @@ class TransactionsController extends Controller
 
         // simpan transaksi
         Transaction::create([
-            // 'user_id' => Auth::id(), // mengambil id user yang login
-            'user_id' => 1, // sementara hardcode user_id ke 1
+            'user_id' => Auth::id(), // mengambil id user yang login
+            // 'user_id' => 1, // sementara hardcode user_id ke 1
             'transaction_date' => $request->transaction_date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,

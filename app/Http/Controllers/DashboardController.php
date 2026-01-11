@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class DashboardController extends Controller
 {
     //menampilkan halaman dashboard
     public function index(Request $request)
     {
-        $query = Transaction::query();
+        $query = Transaction::where('user_id', Auth::id());
+
         if ($request->filled('month')) {
             $date = Carbon::parse($request->month);
 
@@ -19,17 +23,31 @@ class DashboardController extends Controller
                 ->whereMonth('transaction_date', $date->month);
         }
 
-        $transactions = $query->orderBy('transaction_date', 'desc')->get();
-        $totalAmount = $query->sum('amount');
-        $totalIncome = (clone $query)->where('category_id', '1')->sum('amount');
-        $totalExpense = (clone $query)->where('category_id', '2')->sum('amount');
+        $transactions = (clone $query)
+            ->orderBy('transaction_date', 'desc')
+            ->get();
+
+        $totalAmount = (clone $query)->sum('amount');
+
+        $totalIncome = (clone $query)
+            ->where('category_id', 1)
+            ->sum('amount');
+
+        $totalExpense = (clone $query)
+            ->where('category_id', 2)
+            ->sum('amount');
 
         // DATA CHART PENDAPATAN PER BULAN dikrim ke chart-income.js
         $year = $request->filled('month')
             ? Carbon::parse($request->month)->year
             : now()->year;
 
-        $incomePerMonth = Transaction::selectRaw('MONTH(transaction_date) as month, SUM(amount) as total')
+        $chartQuery = Transaction::where('user_id', Auth::id())
+            ->where('category_id', 1)
+            ->whereYear('transaction_date', $year);
+
+        $incomePerMonth = (clone $chartQuery)
+            ->selectRaw('MONTH(transaction_date) as month, SUM(amount) as total')
             ->where('category_id', 1)
             ->whereYear('transaction_date', $year)
             ->groupBy('month')
@@ -41,7 +59,12 @@ class DashboardController extends Controller
         }
 
 
-        // tampilkan transaksi
-        return view('dashboard', compact('transactions', 'totalAmount', 'totalIncome', 'totalExpense', 'monthlyIncome'));
+        return view('dashboard', compact(
+            'transactions',
+            'totalAmount',
+            'totalIncome',
+            'totalExpense',
+            'monthlyIncome'
+        ));
     }
 }

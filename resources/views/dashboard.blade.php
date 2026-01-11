@@ -121,8 +121,8 @@
                             <img src="{{asset('./assets/compiled/jpg/1.jpg')}}" alt="Face 1">
                         </div>
                         <div class="ms-3 name">
-                            <h5 class="font-bold">Master Yoga</h5>
-                            <h6 class="text-muted mb-0">@yogatama</h6>
+                            <h5 class="font-bold">{{ Auth::user()->name }}</h5>
+                            <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
                         </div>
                     </div>
                 </div>
