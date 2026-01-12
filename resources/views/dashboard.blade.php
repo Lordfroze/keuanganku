@@ -2,15 +2,11 @@
 @section('title', 'Dashboard')
 @section('content')
 <header class="mb-3">
-    <a href="#" class="burger-btn d-block d-xl-none">
-        <i class="bi bi-justify fs-3"></i>
-    </a>
     <!-- chart income -->
     <script>
         window.monthlyIncome = @json($monthlyIncome);
     </script>
 </header>
-
 <div class="page-heading">
     <h3>Dashboard Statistics</h3>
     <!-- form pencarian -->
