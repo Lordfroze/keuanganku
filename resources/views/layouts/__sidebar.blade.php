@@ -69,7 +69,7 @@
 
                     <ul class="submenu ">
                         <li class="submenu-item">
-                            <a href="component-accordion.html" class="submenu-link">Accordion</a>
+                            <a href="{{ route('categories.index') }}" class="submenu-link">Categories</a>
                         </li>
                     </ul>
                 </li>
