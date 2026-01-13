@@ -29,18 +29,21 @@
                                             <label for="name">Jenis Kategori</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <select class="form-select" id="category_type" name="category_type">
-                                                @foreach ($categories as $category)
-                                                <option value="{{ $category->type }}">{{ $category->type }}</option>
+                                            <select name="type" class="form-control">
+                                                <option value="">-- Pilih Tipe --</option>
+                                                @foreach ($types as $type)
+                                                <option value="{{ $type }}">
+                                                    {{ ucfirst($type) }}
+                                                </option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="description">Keterangan</label>
+                                            <label for="name">Nama Kategori</label>
                                         </div>
                                         <div class="col-md-8 form-group">
-                                            <input type="text" id="description" class="form-control" name="description"
-                                                placeholder="pendapatan dari jualan" value="jualan">
+                                            <input type="text" id="name" class="form-control" name="name"
+                                                placeholder="pendapatan dari jualan">
                                         </div>
 
                                         <div class="col-sm-12 d-flex justify-content-end">
