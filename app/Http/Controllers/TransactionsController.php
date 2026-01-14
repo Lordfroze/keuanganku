@@ -23,17 +23,24 @@ class TransactionsController extends Controller
         }
 
         $transactions = (clone $query)
+            ->with(['category' => function ($q) {
+                $q->withTrashed();
+            }])
             ->orderBy('transaction_date', 'desc')
             ->get();
 
         $totalAmount = (clone $query)->sum('amount');
 
         $totalIncome = (clone $query)
-            ->where('category_id', 1)
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'income');
+            })
             ->sum('amount');
 
         $totalExpense = (clone $query)
-            ->where('category_id', 2)
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'expense');
+            })
             ->sum('amount');
 
         return view('transactions.index', compact(

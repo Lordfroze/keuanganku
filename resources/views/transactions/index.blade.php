@@ -142,7 +142,7 @@
                     <tr>
                         <td>{{ \Carbon\Carbon::parse($transaction->transaction_date)->format('d M Y') }}</td>
                         <td>{{ 'Rp'. number_format($transaction->amount, 0, ',','.') }}</td>
-                        <td>{{ $transaction->category->name }}</td>
+                        <td>{{ $transaction->category ? $transaction->category->name : 'Kategori tidak tersedia' }}</td>
                         <td>{{ $transaction->description }}</td>
                         <td>
                             <a href="{{ route('transactions.edit', $transaction->id) }}" class="btn btn-warning btn-sm">
@@ -155,9 +155,6 @@
                                     <i class="bi bi-trash"></i> Hapus
                                 </button>
                             </form>
-                        </td>
-                        <td>
-
                         </td>
                     </tr>
                     <!-- jika table kosong -->

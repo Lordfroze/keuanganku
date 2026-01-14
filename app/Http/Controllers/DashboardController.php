@@ -30,11 +30,15 @@ class DashboardController extends Controller
         $totalAmount = (clone $query)->sum('amount');
 
         $totalIncome = (clone $query)
-            ->where('category_id', 1)
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'income');
+            })
             ->sum('amount');
 
         $totalExpense = (clone $query)
-            ->where('category_id', 2)
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'expense');
+            })
             ->sum('amount');
 
         // DATA CHART PENDAPATAN PER BULAN dikrim ke chart-income.js
@@ -43,12 +47,13 @@ class DashboardController extends Controller
             : now()->year;
 
         $chartQuery = Transaction::where('user_id', Auth::id())
-            ->where('category_id', 1)
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'income');
+            })
             ->whereYear('transaction_date', $year);
 
         $incomePerMonth = (clone $chartQuery)
             ->selectRaw('MONTH(transaction_date) as month, SUM(amount) as total')
-            ->where('category_id', 1)
             ->whereYear('transaction_date', $year)
             ->groupBy('month')
             ->pluck('total', 'month');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -44,6 +45,7 @@ class CategoryController extends Controller
         Category::create([
             'name' => $request->name,
             'type' => $request->type,
+            'user_id' => Auth::id(), // mengambil id user yang login
         ]);
 
         return redirect()->route('categories.index')->with('success', 'Kategori berhasil ditambahkan.');
