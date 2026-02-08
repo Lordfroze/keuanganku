@@ -100,7 +100,8 @@
         </div>
         <div class="card-body">
             <!-- form pencarian -->
-            <form method="GET" action="{{ route('transactions.index') }}" class="mb-3">
+            <form method="GET" action="{{ route('transactions.index') }}" class="mb-3" id="filter-form">
+
                 <div class="row g-2 align-items-end">
                     <div class="col-auto">
                         <label>Bulan</label>
@@ -167,4 +168,16 @@
             </table>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Cek jika parameter 'month' tidak ada di URL saat ini.
+            // Ini untuk mencegah loop pengiriman form tanpa henti.
+            const urlParams = new URLSearchParams(window.location.search);
+            if (!urlParams.has('month')) {
+                // Jika tidak ada parameter 'month', kirim form filter secara otomatis.
+                document.getElementById('filter-form').submit();
+            }
+        });
+    </script>
     @endsection
